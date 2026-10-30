@@ -28,8 +28,6 @@ This project was initially developed by following a JavaScript game development 
 
 ## ✨ Game Features
 
-## ✨ Game Features
-
 ### 🕹️ Character Movement
 
 - ✅ Move the player using WASD or arrow keys
