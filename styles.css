@@ -1,0 +1,255 @@
+body{
+    background-image: url("assets/land.png");
+}
+
+.player{
+    width: 80px;
+    height: 100px;
+    background-image: url("assets/player_front.png");
+    background-size: 240px 100px;
+    background-position: -80px 0;
+    position: fixed;
+    z-index: 999;
+}
+.player.active{
+    animation: .2s walk linear infinite;
+}
+
+@keyframes walk{
+    0%, 32%{
+        background-position: 0 0;
+    }
+    33%, 65%{
+        background-position: -80px 0;
+    }
+    66%, 100%{
+        background-position: -160px 0;
+    }
+}
+
+.bush{
+    width: 50px;
+    height: 40px;
+    background-image: url("assets/bush.png");
+    background-size: 100% 100%;
+    position: fixed;
+    z-index: -1;
+}
+
+.pokeball{
+    width: 30px;
+    height: 30px;
+    background-image: url("assets/pokeball.png");
+    background-size: 100% 100%;
+    position: fixed;
+}
+
+/* Score display in the top-right corner */
+.score-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 10px 20px;
+    border-radius: 10px;
+    z-index: 1000;
+    font-family: Arial, sans-serif;
+}
+
+.score-container h2 {
+    font-size: 18px;
+    margin: 0;
+}
+
+/* Countdown timer displayed in the top-left corner */
+.timer-container {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-family: Arial, sans-serif;
+    z-index: 1000;
+}
+
+.timer-container h2 {
+    font-size: 18px;
+    margin: 0;
+}
+
+/* Game over screen displayed in the centre */
+.game-over-screen {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.75);
+    z-index: 2000;
+
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    color: white;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+.game-over-screen h1 {
+    font-size: 48px;
+    margin-bottom: 10px;
+}
+
+.game-over-screen p {
+    font-size: 24px;
+}
+
+/* Restart button */
+#restartButton {
+    padding: 15px 30px;
+    background-color: #ff4444;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#restartButton:hover {
+    background-color: #cc2222;
+}
+
+/* Style the Pause/Resume button */
+#pauseButton {
+    position: fixed;
+    top: 90px;
+    left: 20px;
+    padding: 10px 20px;
+    background-color: #ffcc00;
+    color: black;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+/* Change the button colour when hovering */
+#pauseButton:hover {
+    background-color: #e6b800;
+}
+
+/* Dark overlay that covers the game when paused */
+.pause-menu {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1500;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+}
+
+/* Pause menu content box */
+.pause-content {
+    background-color: #263a29;
+    color: white;
+    text-align: center;
+    padding: 35px;
+    border-radius: 15px;
+    border: 3px solid #ffcc00;
+    width: 300px;
+    max-width: 85vw;
+}
+
+/* Resume button */
+#resumeButton {
+    background-color: #ffcc00;
+    color: black;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+#resumeButton:hover {
+    background-color: #e6b800;
+}
+
+/* Difficulty selection screen */
+#difficultyMenu {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.85);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 3000;
+    font-family: Arial, sans-serif;
+}
+
+/* Difficulty buttons */
+#difficultyMenu button {
+    width: 200px;
+    padding: 15px;
+    margin: 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: #ffcc00;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+/* Button hover effect */
+#difficultyMenu button:hover {
+    background-color: #e6b800;
+}
+
+/* Restart button styling */
+#restartButton {
+    padding: 15px 30px;
+    background-color: #ff4444;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#restartButton:hover {
+    background-color: #cc2222;
+}
+
+/* Restart button inside the Pause Menu */
+#pauseRestartButton {
+    background-color: #ff4444;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+#pauseRestartButton:hover {
+    background-color: #cc2222;
+}
+
+/* Style the difficulty selection title */
+#difficultyMenu h1 {
+    font-size: 42px;
+    color: #ffcc00;
+    margin-bottom: 10px;
+}
+
+/* Style the difficulty selection subtitle */
+#difficultyMenu h2 {
+    font-size: 24px;
+    color: white;
+    margin-bottom: 20px;
+}
