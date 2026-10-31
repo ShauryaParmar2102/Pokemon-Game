@@ -1,9 +1,32 @@
 const NUM_BUSHES = 50; // Set the total number of bushes to generate
-const NUM_BALLS = 10;
+const NUM_BALLS = 10; // Set the number of Pokéballs that spawn on the map
+const HUD_HEIGHT = 120 // Space reserved for the top UI
 
 // Store the selected difficulty settings
 let timeLeft = 90
 let TARGET_SCORE = 20
+
+// Track the current level
+let currentLevel = 1
+
+// Store the selected difficulty settings for each new level
+let baseTime = 90
+let baseTarget = 20
+
+// Store the background and name for each level
+const levels = [
+    { name: 'Grassy Fields', background: 'land.png' }, // Original level
+    { name: 'Forest', background: 'forest.png' },
+    { name: 'Beach', background: 'beach.png' },
+    { name: 'Cave', background: 'cave.png' },
+    { name: 'Volcano', background: 'volcano.png' }
+]
+
+// Store the timer so it can be stopped between levels
+let timerInterval = null
+
+// Track the current animation frame so it can be cancelled
+let animationFrameId = null
 
 // Track whether the player has started the game
 let gameStarted = false
@@ -35,6 +58,12 @@ const finalScore = document.getElementById('finalScore')
 
 // Select the restart button
 const restartButton = document.getElementById('restartButton')
+
+// Select the Next Level button
+const nextLevelButton = document.getElementById('nextLevelButton')
+
+// Select the level name displayed on screen
+const levelLabel = document.getElementById('levelLabel')
 
 const player = document.querySelector('.player')
 const player_pos = {
@@ -75,13 +104,21 @@ function createBushes() {
         // Add the 'bush' CSS class to style the div
         div.classList.add('bush')
 
-        // Set a random horizontal position between 0% and 100%
-        let x = Math.random() * 100 + '%'
-        let y = Math.random() * 100 + '%'
-        div.style.left = x // Set the bush's horizontal position (left and right)
-        div.style.top = y // Set the bush's vertical position (up and down)
-        document.body.appendChild(div) // Add the bush element to the HTML webpage
+        // Generate a random horizontal position while keeping bushes inside the screen
+        let x = Math.random() * (window.innerWidth - 50)
 
+        // Generate a random vertical position below the top UI area
+        // Subtract 40 to prevent bushes from going beyond the bottom edge
+        let y = HUD_HEIGHT + Math.random() * (window.innerHeight - HUD_HEIGHT - 40)
+
+        // Set the bush's horizontal position in pixels
+        div.style.left = x + 'px'
+
+        // Set the bush's vertical position in pixels
+        div.style.top = y + 'px'
+
+        // Add the newly generated bush to the webpage
+        document.body.appendChild(div)
     }
 }
 
@@ -165,7 +202,8 @@ function run() {
 
     // Freeze the game while paused
     if (isPaused) {
-        requestAnimationFrame(run)
+        // Save the animation frame ID
+        animationFrameId = requestAnimationFrame(run)
         return
     }
 
@@ -188,10 +226,10 @@ function run() {
         player_pos.y = 0
     }
 
-    // Prevent the player from moving beyond the top edge
-    if (player_pos.y > window.innerHeight - player.offsetHeight) {
-        player_pos.y = window.innerHeight - player.offsetHeight
-    }
+    // Prevent the player from moving underneath the top UI
+if (player_pos.y > window.innerHeight - player.offsetHeight - HUD_HEIGHT) {
+    player_pos.y = window.innerHeight - player.offsetHeight - HUD_HEIGHT
+}
 
     // Update the player's position on the screen
     player.style.left = player_pos.x + 'px'
@@ -200,8 +238,8 @@ function run() {
     // Check whether the player collects any Pokéballs
     checkCollisions()
 
-    // Continue the game animation
-    requestAnimationFrame(run)
+    // Save the animation frame ID
+    animationFrameId = requestAnimationFrame(run)
 }
 
 // Function to generate a Pokéball at a random position
@@ -214,12 +252,12 @@ function generateBall() {
     div.classList.add('pokeball')
 
     // Generate random horizontal and vertical positions
-    let x = Math.random() * 100 + '%'
-    let y = Math.random() * 100 + '%'
+let x = Math.random() * (window.innerWidth - 30)
+let y = HUD_HEIGHT + Math.random() * (window.innerHeight - HUD_HEIGHT - 30)
 
-    // Set the Pokéball's position
-    div.style.left = x
-    div.style.top = y
+// Set the Pokéball's position
+div.style.left = x + 'px'
+div.style.top = y + 'px'
 
     // Store the Pokéball in the balls array
     balls.push({
@@ -234,18 +272,22 @@ function generateBall() {
     document.body.appendChild(div)
 }
 
+// Generate the starting Pokéballs on the map
 function createBalls() {
     // Loop through the code 50 times (NUM_BALLS = 50)
-    for (let i =0; i < NUM_BALLS; i++) { 
+    for (let i = 0; i < NUM_BALLS; i++) { 
         generateBall()
     }
 }
 
-// Function to end the game
+// End the current level when the player wins or loses
 function endGame(won) {
 
-    // Mark the game as finished
+    // Mark the current level as finished
     gameOver = true
+
+    // Stop the countdown
+    clearInterval(timerInterval)
 
     // Stop the player's movement
     player_vel.x = 0
@@ -254,25 +296,48 @@ function endGame(won) {
     // Stop the walking animation
     player.classList.remove('active')
 
-    // Display the game over screen
+    // Display the result screen
     gameOverScreen.style.display = 'flex'
 
-    // Display the result
-    if (won) {
-        gameResult.textContent = 'You Win! 🎉'
+    // Check whether the player won and more levels remain
+    if (won && currentLevel < levels.length) {
+
+        // Display the completed level number
+        gameResult.textContent = `Level ${currentLevel} Complete! 🎉`
+
+        // Show the Next Level button
+        nextLevelButton.style.display = 'inline-block'
+
+    } else if (won) {
+
+        // Display the final victory message after Level 5
+        gameResult.textContent = 'Congratulations! You completed all 5 levels! 🏆'
+
+        // Hide the Next Level button
+        nextLevelButton.style.display = 'none'
+
     } else {
+
+        // Display Game Over when time runs out
         gameResult.textContent = 'Game Over!'
+
+        // Hide the Next Level button
+        nextLevelButton.style.display = 'none'
     }
 
-    // Display the final score
+    // Display the number of Pokéballs collected
     finalScore.textContent = `You collected ${score} Pokéballs!`
 }
 
-// Start the 60-second countdown timer
+
+ // Start the countdown timer for the current level
 function startTimer() {
 
-    // Run every second
-    const timerInterval = setInterval(function() {
+    // Clear the previous level's timer to prevent multiple timers running
+    clearInterval(timerInterval)
+
+    // Run the countdown every second
+    timerInterval = setInterval(function() {
 
         // Stop counting if the game has ended
         if (gameOver) {
@@ -280,13 +345,13 @@ function startTimer() {
             return
         }
 
-        // Stop the countdown timer when the game is paused
+        // Stop the countdown when the game is paused
         if (isPaused) return
 
-        // Decrease the remaining time
+        // Decrease the remaining time by one second
         timeLeft--
 
-        // Update the timer display
+        // Update the timer displayed on the screen
         timerDisplay.textContent = timeLeft
 
         // End the game when time runs out
@@ -295,9 +360,9 @@ function startTimer() {
             endGame(false)
         }
 
-        // Close the function running inside setInterval
-    }, 1000)
-} // Close the startTimer() function
+    }, 1000) // Run the countdown every 1000 milliseconds (1 second)
+}
+
 
 // Function to pause or resume the game
 function togglePause() {
@@ -334,8 +399,10 @@ resumeButton.addEventListener('click', togglePause)
 // Function to initialise the game
 function init() {
 
-    // Generate the bushes
-    createBushes()
+    // Generate bushes on Level 1 and Level 2 only
+    if (currentLevel <=2) {
+        createBushes()
+    }
 
     // Generate the Pokéballs
     createBalls()
@@ -347,13 +414,111 @@ function init() {
     startTimer()
 }
 
+ // Load the current level and reset the gameplay
+function loadLevel() {
+
+    // Stop the previous animation loop before restarting the level
+    cancelAnimationFrame(animationFrameId)
+
+    // Get the current level information from the levels array
+    const level = levels[currentLevel - 1]
+
+    // Change the background based on the current level
+    document.body.style.backgroundImage =
+        `url("assets/${level.background}")`
+
+    // Update the current level displayed on the webpage
+    levelLabel.textContent = `${currentLevel} – ${level.name}`
+
+    // Remove all bushes from the previous level
+    document.querySelectorAll('.bush').forEach(function(bush) {
+        bush.remove()
+    })
+
+    // Remove all Pokéballs from the previous level
+    balls.forEach(function(item) {
+        item.ball.remove()
+    })
+
+    // Empty the Pokéballs array
+    balls.length = 0
+
+    // Reset the player's score to zero
+    score = 0
+
+    // Update the score displayed on the webpage
+    scoreDisplay.textContent = score
+
+    // Reset the timer and target score for the selected difficulty
+    timeLeft = baseTime
+    TARGET_SCORE = baseTarget
+
+    // Update the timer display
+    timerDisplay.textContent = timeLeft
+
+    // Update the number of Pokéballs required to win
+    document.getElementById('targetScore').textContent = TARGET_SCORE
+
+    // Stop horizontal and vertical movement
+    player_vel.x = 0
+    player_vel.y = 0
+
+    // Stop the walking animation
+    player.classList.remove('active')
+
+    // Move the player to the centre of the screen
+    player_pos.x = Math.floor((window.innerWidth - player.offsetWidth) / 2)
+    player_pos.y = Math.floor((window.innerHeight - player.offsetHeight) / 2)
+
+    // Update the player's position
+    player.style.left = player_pos.x + 'px'
+    player.style.bottom = player_pos.y + 'px'
+
+    // Reset the game state for the new level
+    gameOver = false
+    isPaused = false
+
+    // Hide the previous level's result screen
+    gameOverScreen.style.display = 'none'
+
+    // Hide the pause menu
+    pauseMenu.style.display = 'none'
+
+    // Hide the Next Level button until the next victory
+    nextLevelButton.style.display = 'none'
+
+    // Reset the Pause button text
+    pauseButton.textContent = 'Pause'
+
+    // Start the new level
+    init()
+}
+
+
+// Store the level selected by the player
+let selectedLevel = 1
+
+
+ // Function to choose a level before selecting difficulty
+function selectLevel(levelNumber) {
+
+    // Save the level selected by the player
+    selectedLevel = levelNumber
+
+    // Hide the Level Select menu
+    document.getElementById('levelSelectMenu').style.display = 'none'
+
+    // Show the difficulty selection menu
+    document.getElementById('difficultyMenu').style.display = 'flex'
+}
+
 // Start the game with the selected difficulty
 function startGame(difficulty) {
 
     // Configure the game difficulty
     if (difficulty === 'easy') {
-        timeLeft = 90
-        TARGET_SCORE = 20
+        timeLeft = 90 // 90 seconds to finish
+        TARGET_SCORE = 20 // Set the number of Pokéballs required to win
     }
 
     if (difficulty === 'medium') {
@@ -378,8 +543,18 @@ function startGame(difficulty) {
     // Mark the game as started
     gameStarted = true
 
-    // Start gameplay
-    init()
+    // Save the selected difficulty's time limit
+    baseTime = timeLeft
+
+    // Save the number of Pokéballs required to win
+    baseTarget = TARGET_SCORE
+
+    // Start the game from the level selected by the player
+    currentLevel = selectedLevel
+
+    // Load Level 1 with the correct background and settings
+    loadLevel()
+
 }
 
 // Listen for when the player presses a keyboard key
@@ -396,25 +571,25 @@ if (!gameStarted || isPaused || gameOver) return
 
     // Move the player upwards using W or Arrow Up
 if (e.key.toLowerCase() === 'w' || e.key === 'ArrowUp') {
-    player_vel.y = 3
+    player_vel.y = 5
     player.style.backgroundImage = 'url("assets/player_front.png")'
 }
 
 // Move the player downwards using S or Arrow Down
 if (e.key.toLowerCase() === 's' || e.key === 'ArrowDown') {
-    player_vel.y = -3
+    player_vel.y = -5
     player.style.backgroundImage = 'url("assets/player_back.png")'
 }
 
 // Move the player left using A or Arrow Left
 if (e.key.toLowerCase() === 'a' || e.key === 'ArrowLeft') {
-    player_vel.x = -3
+    player_vel.x = -5
     player.style.backgroundImage = 'url("assets/player_left.png")'
 }
 
 // Move the player right using D or Arrow Right
 if (e.key.toLowerCase() === 'd' || e.key === 'ArrowRight') {
-    player_vel.x = 3
+    player_vel.x = 5
     player.style.backgroundImage = 'url("assets/player_right.png")'
 }
 
@@ -458,4 +633,24 @@ const pauseRestartButton = document.getElementById('pauseRestartButton')
 // Restart the game when the button is clicked
 pauseRestartButton.addEventListener('click', function() {
     window.location.reload()
+})
+
+// Listen for when the player clicks the Next Level button
+nextLevelButton.addEventListener('click', function() {
+
+    // Increase the current level number by one
+    currentLevel++
+
+    // Load the next level and reset gameplay
+    loadLevel()
+})
+
+// Select the Restart Level button from the Pause Menu
+const restartLevelButton = document.getElementById('restartLevelButton')
+
+// Listen for when the player clicks Restart Level
+restartLevelButton.addEventListener('click', function() {
+
+    // Reload the current level without changing its number or difficulty
+    loadLevel()
 })

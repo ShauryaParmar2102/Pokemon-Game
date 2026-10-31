@@ -1,61 +1,113 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Connect the CSS stylesheet -->
     <link rel="stylesheet" href="styles.css">
-    <title>Pokemon Game</title>
+
+    <title>Pokémon Collector</title>
 </head>
 <body>
 
-    <!-- Difficulty selection menu -->
-<div id="difficultyMenu">
-    <h1>Pokémon Collector</h1>
-    <h2>Select Difficulty</h2>
+    <!-- Level selection menu displayed when the game first loads -->
+    <div id="levelSelectMenu">
+        <h1>Pokémon Collector</h1>
+        <h2>Select Level</h2>
 
-    <button onclick="startGame('easy')">Easy</button>
-    <button onclick="startGame('medium')">Medium</button>
-    <button onclick="startGame('hard')">Hard</button>
-</div>
+        <!-- Choose which level to play -->
+        <button onclick="selectLevel(1)">🌿 Level 1 – Grassy Fields</button>
+        <button onclick="selectLevel(2)">🌲 Level 2 – Forest</button>
+        <button onclick="selectLevel(3)">🏖️ Level 3 – Beach</button>
+        <button onclick="selectLevel(4)">🪨 Level 4 – Cave</button>
+        <button onclick="selectLevel(5)">🌋 Level 5 – Volcano</button>
+    </div>
 
-    <!-- Display the player's score -->
+    <!-- Difficulty selection menu shown after choosing a level -->
+    <div id="difficultyMenu">
+        <h1>Pokémon Collector</h1>
+        <h2>Select Difficulty</h2>
+
+        <!-- Start the game with the selected difficulty -->
+        <button onclick="startGame('easy')">Easy</button>
+        <button onclick="startGame('medium')">Medium</button>
+        <button onclick="startGame('hard')">Hard</button>
+    </div>
+
+    <!-- Display the player's score and target -->
     <div class="score-container">
-        <h2>Pokéballs: <span id="score">0</span>/<span id="targetScore">20</span></h2>
+        <h2>
+            Pokéballs:
+            <span id="score">0</span>/<span id="targetScore">20</span>
+        </h2>
     </div>
 
     <!-- Display the countdown timer -->
     <div class="timer-container">
-        <h2>Time: <span id="timer">60</span>s</h2>
+        <h2>
+            Time: <span id="timer">90</span>s
+        </h2>
     </div>
 
-    <!-- Button to pause and resume the game -->
+    <!-- Display the current level -->
+    <div class="level-container">
+        <h2>
+            Level: <span id="levelLabel">1 – Grassy Fields</span>
+        </h2>
+    </div>
+
+    <!-- Button to pause or resume the game -->
     <button id="pauseButton">Pause (P)</button>
 
     <!-- Pause menu displayed when the game is paused -->
     <div class="pause-menu" id="pauseMenu">
         <div class="pause-content">
+
+            <!-- Pause menu heading -->
             <h1>Game Paused</h1>
+
+            <!-- Message displayed inside the Pause Menu -->
             <p>Take a break! Your progress is saved for this round.</p>
+
+            <!-- Resume the current level -->
             <button id="resumeButton">Resume Game</button>
 
-            <!-- Restart the game from the difficulty selection menu -->
+            <!-- Restart the current level and reset its progress -->
+            <button id="restartLevelButton">Restart Level</button>
+
+            <!-- Restart the entire game from Level Select -->
             <button id="pauseRestartButton">Restart Game</button>
+
         </div>
     </div>
 
-    <!-- Game over / victory screen -->
-<!-- Game Over / Victory Screen -->
-<div class="game-over-screen" id="gameOverScreen">
-    <h1 id="gameResult">Game Over!</h1>
-    <p id="finalScore"></p>
+    <!-- Game Over / Level Complete / Victory screen -->
+    <div class="game-over-screen" id="gameOverScreen">
 
-    <!-- Button to restart the game -->
-    <button id="restartButton">Play Again</button>
-</div>
+        <!-- Display whether the player won or lost -->
+        <h1 id="gameResult">Game Over!</h1>
+
+        <!-- Display the number of Pokéballs collected -->
+        <p id="finalScore"></p>
+
+        <!-- Continue to the next level after winning -->
+        <button id="nextLevelButton">Next Level</button>
+
+        <!-- Restart the game from the beginning -->
+        <button id="restartButton">Play Again</button>
+
+    </div>
+    <!-- Game Over screen ends here -->
 
     <!-- Player character -->
+    <!-- Keep outside the menus so it stays visible during gameplay -->
     <div class="player"></div>
 
+    <!-- Connect the JavaScript file -->
     <script src="script.js"></script>
+
 </body>
 </html>
+

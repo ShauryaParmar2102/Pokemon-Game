@@ -184,7 +184,7 @@ body{
     inset: 0;
     background-color: rgba(0, 0, 0, 0.85);
     color: white;
-    display: flex;
+    display: none; /* Hide the difficulty menu until a level is selected */
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -252,4 +252,101 @@ body{
     font-size: 24px;
     color: white;
     margin-bottom: 20px;
+}
+
+
+/* Display the current level at the top centre of the screen */
+.level-container {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: white;
+    padding: 12px 20px;
+    border-radius: 10px;
+    z-index: 1000;
+}
+
+/* Style the level heading */
+.level-container h2 {
+    margin: 0;
+    font-size: 18px;
+    font-family: Arial, sans-serif; /* Use a modern, clean font */
+    font-weight: bold; /* Make the level title stand out */
+    color: black;
+}
+
+/* Style the Next Level button */
+#nextLevelButton {
+    display: none; /* Hide the button until a level is completed */
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 18px;
+    cursor: pointer;
+    margin: 10px;
+}
+
+/* Change the button colour when hovering over it */
+#nextLevelButton:hover {
+    background-color: #218838;
+}
+
+
+
+/* Level selection menu covering the game screen */
+#levelSelectMenu {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.9);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 4000;
+    font-family: Arial, sans-serif;
+}
+
+/* Level selection heading */
+#levelSelectMenu h1 {
+    color: #ffcc00;
+    font-size: 42px;
+}
+
+/* Style the level selection buttons */
+#levelSelectMenu button {
+    width: 280px;
+    padding: 14px;
+    margin: 6px;
+    background-color: #ffcc00;
+    color: black;
+    border: none;
+    border-radius: 10px;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+/* Change button colour when hovering */
+#levelSelectMenu button:hover {
+    background-color: #e6b800;
+}
+
+/* Style the Restart Level button */
+#restartLevelButton {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+/* Change colour when hovering over Restart Level */
+#restartLevelButton:hover {
+    background-color: #217dbb;
 }
