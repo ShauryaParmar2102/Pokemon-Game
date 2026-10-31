@@ -66,6 +66,23 @@ Players can choose from three difficulty levels.
 
 Each difficulty changes the countdown timer and the number of Pokéballs required to win.
 
+### 🗺️ Level Selection
+
+Players can select from five different levels, each with its own background.
+
+| Level | Name | Environment |
+|---|---|---|
+| 1 | 🌿 Grassy Fields | Grassland with bushes |
+| 2 | 🌲 Forest | Forest with bushes |
+| 3 | 🏖️ Beach | Beach environment |
+| 4 | 🪨 Cave | Underground cave |
+| 5 | 🌋 Volcano | Volcanic environment |
+
+- ✅ Select any of the five levels before starting
+- ✅ Each level has its own background
+- ✅ Complete a level to progress to the next one
+- ✅ Score and timer reset when advancing to a new level
+
 ### ⏱️ Countdown Timer
 
 - ✅ Timer starts when a difficulty is selected
@@ -77,6 +94,7 @@ Each difficulty changes the countdown timer and the number of Pokéballs require
 
 ### ⏸️ Pause & Resume System
 
+- ✅ Restart the current level without changing the selected difficulty
 - ✅ Pause gameplay using the Pause button
 - ✅ Press **P** to pause or resume
 - ✅ Dedicated pause menu overlay
@@ -88,11 +106,13 @@ Each difficulty changes the countdown timer and the number of Pokéballs require
 
 ### 🏆 Win & Game Over System
 
+- ✅ Next Level button appears after completing a level
+- ✅ Special victory message appears after completing Level 5
 - ✅ Victory screen appears when the target score is reached
 - ✅ Game Over screen appears when the timer runs out
 - ✅ Final number of collected Pokéballs is displayed
 - ✅ Player movement stops when the game ends
-- ✅ Play Again button reloads the game and returns to difficulty selection
+- ✅ Play Again button reloads the game and returns to Level Select
 
 ## 🎮 Game Controls
 
@@ -109,13 +129,21 @@ Players can also use the onscreen buttons to pause, resume or restart the game.
 ## 📂 Project Structure
 
 ```text
+
+## 📂 Project Structure
+
+```text
 Pokemon-Collector/
 ├── 📄 index.html
 ├── 🎨 styles.css
 ├── ⚡ script.js
 ├── 📁 assets/
-│   ├── 🌳 land.png
-│   ├── 🌿 bush.png
+│   ├── 🌿 land.png
+│   ├── 🌲 forest.png
+│   ├── 🏖️ beach.png
+│   ├── 🪨 cave.png
+│   ├── 🌋 volcano.png
+│   ├── 🌳 bush.png
 │   ├── ⚪ pokeball.png
 │   ├── 🧍 player_front.png
 │   ├── 🧍 player_back.png
@@ -124,6 +152,8 @@ Pokemon-Collector/
 │   └── 🔊 coin.mp3
 └── 📖 README.md
 ```
+
+
 
 ## 🚀 Getting Started
 
@@ -139,19 +169,23 @@ Pokemon-Collector/
 1. Open the extracted project folder.
 2. Open the folder in **Visual Studio Code** if you want to inspect or modify the source code.
 
+
 ### ▶️ 3. Run the Game
 
 1. Locate `index.html` inside the project folder.
-2. Double-click `index.html` to open it in your web browser, or use the **Live Server** extension in Visual Studio Code.
-3. The difficulty selection menu will appear.
+2. Double-click `index.html` to open the game in your browser, or use the Live Server extension in Visual Studio Code.
+3. The Level Select menu will appear.
 
 ### 🎮 4. Start Playing
 
-1. 🎯 Choose Easy, Medium or Hard.
-2. 🕹️ Move around the map using WASD or arrow keys.
-3. ⚪ Collect Pokéballs to increase your score.
-4. ⏱️ Reach the target score before the timer runs out.
-5. 🏆 Win the game or restart and try again!
+1. 🗺️ Select one of the five available levels.
+2. 🎯 Choose Easy, Medium or Hard.
+3. 🕹️ Move around using WASD or the arrow keys.
+4. ⚪ Collect Pokéballs to increase your score.
+5. ⏱️ Reach the target score before the countdown reaches zero.
+6. 🏆 Complete the level to unlock the Next Level option.
+7. ⏸️ Press P to pause or resume gameplay.
+8. 🔄 Use Restart Level to replay the current level, or Restart Game to return to Level Select.
 
 **Note:** The game runs in a web browser and does not require Node.js, npm or a separate backend server.
 
@@ -223,6 +257,38 @@ The timer stops progressing while the game is paused and ends when the player wi
 The `endGame()` function is called when the player wins or runs out of time.
 
 It stops character movement and displays the appropriate result screen.
+
+
+### 🗺️ 7. Level Selection and Progression
+
+The game contains five different levels, each with its own background.
+
+The `levels` array stores the name and background image for each level.
+
+The `selectLevel()` function allows the player to choose a starting level.
+
+The `startGame()` function applies the selected difficulty settings.
+
+The `loadLevel()` function prepares the selected level by:
+
+- Changing the background image
+- Updating the displayed level name
+- Removing Pokéballs and bushes from the previous level
+- Resetting the score and countdown timer
+- Returning the player to the starting position
+- Generating new Pokéballs
+- Restarting gameplay
+
+When a level is completed, the player can select Next Level to continue to the following environment.
+
+### 🔄 8. Restarting a Level
+
+The Pause Menu includes a Restart Level option.
+
+When clicked, the game calls `loadLevel()` to restart the current level.
+
+This resets the score, timer and collectibles without changing the selected level or difficulty.
+
 
 ## 👨‍💻 Author
 
