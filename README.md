@@ -153,7 +153,7 @@ Pokemon-Collector/
 └── 📖 README.md
 ```
 
-```
+
 
 ## 🚀 Getting Started
 
