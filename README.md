@@ -258,6 +258,38 @@ The `endGame()` function is called when the player wins or runs out of time.
 
 It stops character movement and displays the appropriate result screen.
 
+
+### 🗺️ 7. Level Selection and Progression
+
+The game contains five different levels, each with its own background.
+
+The `levels` array stores the name and background image for each level.
+
+The `selectLevel()` function allows the player to choose a starting level.
+
+The `startGame()` function applies the selected difficulty settings.
+
+The `loadLevel()` function prepares the selected level by:
+
+- Changing the background image
+- Updating the displayed level name
+- Removing Pokéballs and bushes from the previous level
+- Resetting the score and countdown timer
+- Returning the player to the starting position
+- Generating new Pokéballs
+- Restarting gameplay
+
+When a level is completed, the player can select Next Level to continue to the following environment.
+
+### 🔄 8. Restarting a Level
+
+The Pause Menu includes a Restart Level option.
+
+When clicked, the game calls `loadLevel()` to restart the current level.
+
+This resets the score, timer and collectibles without changing the selected level or difficulty.
+
+
 ## 👨‍💻 Author
 
 **Made by Shaurya Parmar**
