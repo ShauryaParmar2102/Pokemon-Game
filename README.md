@@ -169,19 +169,23 @@ Pokemon-Collector/
 1. Open the extracted project folder.
 2. Open the folder in **Visual Studio Code** if you want to inspect or modify the source code.
 
+
 ### ▶️ 3. Run the Game
 
 1. Locate `index.html` inside the project folder.
-2. Double-click `index.html` to open it in your web browser, or use the **Live Server** extension in Visual Studio Code.
-3. The difficulty selection menu will appear.
+2. Double-click `index.html` to open the game in your browser, or use the Live Server extension in Visual Studio Code.
+3. The Level Select menu will appear.
 
 ### 🎮 4. Start Playing
 
-1. 🎯 Choose Easy, Medium or Hard.
-2. 🕹️ Move around the map using WASD or arrow keys.
-3. ⚪ Collect Pokéballs to increase your score.
-4. ⏱️ Reach the target score before the timer runs out.
-5. 🏆 Win the game or restart and try again!
+1. 🗺️ Select one of the five available levels.
+2. 🎯 Choose Easy, Medium or Hard.
+3. 🕹️ Move around using WASD or the arrow keys.
+4. ⚪ Collect Pokéballs to increase your score.
+5. ⏱️ Reach the target score before the countdown reaches zero.
+6. 🏆 Complete the level to unlock the Next Level option.
+7. ⏸️ Press P to pause or resume gameplay.
+8. 🔄 Use Restart Level to replay the current level, or Restart Game to return to Level Select.
 
 **Note:** The game runs in a web browser and does not require Node.js, npm or a separate backend server.
 
