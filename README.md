@@ -66,6 +66,23 @@ Players can choose from three difficulty levels.
 
 Each difficulty changes the countdown timer and the number of Pokéballs required to win.
 
+### 🗺️ Level Selection
+
+Players can select from five different levels, each with its own background.
+
+| Level | Name | Environment |
+|---|---|---|
+| 1 | 🌿 Grassy Fields | Grassland with bushes |
+| 2 | 🌲 Forest | Forest with bushes |
+| 3 | 🏖️ Beach | Beach environment |
+| 4 | 🪨 Cave | Underground cave |
+| 5 | 🌋 Volcano | Volcanic environment |
+
+- ✅ Select any of the five levels before starting
+- ✅ Each level has its own background
+- ✅ Complete a level to progress to the next one
+- ✅ Score and timer reset when advancing to a new level
+
 ### ⏱️ Countdown Timer
 
 - ✅ Timer starts when a difficulty is selected
@@ -77,6 +94,7 @@ Each difficulty changes the countdown timer and the number of Pokéballs require
 
 ### ⏸️ Pause & Resume System
 
+- ✅ Restart the current level without changing the selected difficulty
 - ✅ Pause gameplay using the Pause button
 - ✅ Press **P** to pause or resume
 - ✅ Dedicated pause menu overlay
@@ -88,11 +106,13 @@ Each difficulty changes the countdown timer and the number of Pokéballs require
 
 ### 🏆 Win & Game Over System
 
+- ✅ Next Level button appears after completing a level
+- ✅ Special victory message appears after completing Level 5
 - ✅ Victory screen appears when the target score is reached
 - ✅ Game Over screen appears when the timer runs out
 - ✅ Final number of collected Pokéballs is displayed
 - ✅ Player movement stops when the game ends
-- ✅ Play Again button reloads the game and returns to difficulty selection
+- ✅ Play Again button reloads the game and returns to Level Select
 
 ## 🎮 Game Controls
 
