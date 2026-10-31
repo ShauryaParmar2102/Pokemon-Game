@@ -129,13 +129,21 @@ Players can also use the onscreen buttons to pause, resume or restart the game.
 ## 📂 Project Structure
 
 ```text
+
+## 📂 Project Structure
+
+```text
 Pokemon-Collector/
 ├── 📄 index.html
 ├── 🎨 styles.css
 ├── ⚡ script.js
 ├── 📁 assets/
-│   ├── 🌳 land.png
-│   ├── 🌿 bush.png
+│   ├── 🌿 land.png
+│   ├── 🌲 forest.png
+│   ├── 🏖️ beach.png
+│   ├── 🪨 cave.png
+│   ├── 🌋 volcano.png
+│   ├── 🌳 bush.png
 │   ├── ⚪ pokeball.png
 │   ├── 🧍 player_front.png
 │   ├── 🧍 player_back.png
@@ -143,6 +151,8 @@ Pokemon-Collector/
 │   ├── 🧍 player_right.png
 │   └── 🔊 coin.mp3
 └── 📖 README.md
+```
+
 ```
 
 ## 🚀 Getting Started
