@@ -620,11 +620,11 @@ window.addEventListener('keyup', function(e) {
     }
 })
 
-// Restart the game when the player clicks Play Again
+// Replay the current level when the player clicks Play Again
 restartButton.addEventListener('click', function() {
 
-    // Reload the webpage to reset the game
-    window.location.reload()
+    // Restart the current level without changing difficulty
+    loadLevel()
 })
 
 // Select the Restart button inside the Pause Menu
@@ -654,3 +654,6 @@ restartLevelButton.addEventListener('click', function() {
     // Reload the current level without changing its number or difficulty
     loadLevel()
 })
+
+// Return to Level Select when Main Menu is clicked
+document.getElementById('mainMenuButton').addEventListener('click', () => window.location.reload())

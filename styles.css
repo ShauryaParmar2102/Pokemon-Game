@@ -350,3 +350,21 @@ body{
 #restartLevelButton:hover {
     background-color: #217dbb;
 }
+
+
+/* Main Menu button on the Level Complete and Game Over screens */
+#mainMenuButton {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+/* Change the Main Menu button colour when hovering */
+#mainMenuButton:hover {
+    background-color: #217dbb;
+}
